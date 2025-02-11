@@ -17,6 +17,8 @@ def handle_missing_values(df):
 
 def remove_outliers(df, z_scores: float):
     """Removes rows which are beyond z-scores threshold"""
+    # the tutorial says we can go with df_no_outliers = df_filled[(z_scores < 3).all(axis=1)]
+    # however, this didn't work so I wrote the loop below (ugly, but works)
     for column, values in df.items():
         try:
             column_name = f"{str(column)}-z_scores"
@@ -42,7 +44,8 @@ def cap_column_quantile(df, column_name, quantile):
 
 def scale_data(df):
     """scaling data so all features contribute equally to the model"""
-    df_temp = df.select_dtypes(exclude="object")
+    df_temp = df.select_dtypes(
+        exclude="object")  # here we can also use include=[np.number]
     for column in df_temp.columns:
         scaled_column = f"scaled-{column}"
         scaler = StandardScaler()
