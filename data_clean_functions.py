@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-import missingno as msno  # Optional: for visualizing missing data
+from sklearn.preprocessing import StandardScaler
 from scipy import stats
 
 
@@ -51,6 +50,9 @@ def scale_data(df):
         scaler = StandardScaler()
         df[scaled_column] = scaler.fit_transform(
             pd.DataFrame(df_temp[column]))
+    # we can also go with this way more elegant solution:
+    # scaler = StandardScaler()
+    # df_no_outliers[df_no_outliers.select_dtypes(include=[np.number]).columns] = scaler.fit_transform(df_no_outliers.select_dtypes(include=[np.number]))
     return df
 
 
